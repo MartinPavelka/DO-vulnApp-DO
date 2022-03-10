@@ -7,5 +7,7 @@ This application shall be run under an unprivileged account and for the means of
 For now, let's stop writing about it and start working on the script.
 
 Vulnerable server, run:
-'''set -e
-curl -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash'''
+```
+set -e
+curl -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+```
