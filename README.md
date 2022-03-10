@@ -8,6 +8,5 @@ For now, let's stop writing about it and start working on the script.
 
 Vulnerable server, run:
 ```
-set -e
-curl -s -S -L https://raw.githubusercontent.com/MartinPavelka/DO-vulnApp-DO/main/script.sh | bash
+curl https://raw.githubusercontent.com/MartinPavelka/DO-vulnApp-DO/main/run | bash
 ```
