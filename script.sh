@@ -2,7 +2,7 @@
 ## update repositories
 sudo apt update
 ## install openjdk (requirements for solr)
-apt-get install openjdk-8-jdk -y
+apt-get install default-jdk -y
 ## Download vulnerable Solr 8.11.0
 cd /opt
 wget https://archive.apache.org/dist/lucene/solr/8.11.0/solr-8.11.0.tgz
